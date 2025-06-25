@@ -1,6 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Dungeon Acolyte
+A web based campaign manager for Dungeon Masters.
+
+## Features
+### NPC Fabricator
+A tool to create NPCs, from the friendly neighbor to a deadly beast.
+
+### Blacksmith
+A tool to create items
+
+### Almanac
+A collection of everything you made
+
+### Generators
+Get inspiration to make compelling things
+
+### Experience Tracker
+Track experience points
 
 ## Getting Started
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 First, run the development server:
 
