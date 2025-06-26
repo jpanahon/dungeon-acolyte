@@ -10,6 +10,26 @@ export default function NPCFab() {
 
     let savingThrows = stats;
 
+    let skills = [
+        {id: "ATH", name: "Athletics", mod: 0},
+        {id: "ANH", name: "Animal Handling", mod: 0},
+        {id: "ACB", name: "Acrobatics", mod: 0},
+        {id: "ARC", name: "Arcana", mod: 0},
+        {id: "DEC", name: "Deception", mod: 0},
+        {id: "HIS", name: "History", mod: 0},
+        {id: "INS", name: "Insight", mod: 0},
+        {id: "INT", name: "Intimidation", mod: 0},
+        {id: "INV", name: "Investigation", mod: 0},
+        {id: "MED", name: "Medicine", mod: 0},
+        {id: "NAT", name: "Nature", mod: 0},
+        {id: "PRC", name: "Perception", mod: 0},
+        {id: "PRF", name: "Performance", mod: 0},
+        {id: "PRS", name: "Persuasion", mod: 0},
+        {id: "REL", name: "Religion", mod: 0},
+        {id: "SOH", name: "Sleight of Hand", mod: 0},
+        {id: "SUR", name: "Survival", mod: 0},
+    ];
+
     return (
         <main>
             <h1 className="text-6xl">NPC Fabricator</h1>
@@ -76,6 +96,12 @@ export default function NPCFab() {
                     ))}
                     
                     <label>Skills</label> <br/>
+                    {skills.map((stat) => (
+                        <div key={stat.name}>
+                            <p>{stat.name} Proficient <input type="checkbox"></input>
+                            Expertise <input type="checkbox"></input></p>
+                        </div>
+                    ))}
                     <label>Damage Resistances</label> <br/>
                     <label>Damage Immunities</label> <br/>
                     <label>Condition Immunities</label> <br/>
@@ -89,7 +115,7 @@ export default function NPCFab() {
                     <label>Lair Actions</label> <br/>
                     <label>Mythic Actions</label> <br/>
                 </form>
-            </section>
+            </section> 
         </main>
     );
 }
