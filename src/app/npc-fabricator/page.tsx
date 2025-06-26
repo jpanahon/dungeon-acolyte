@@ -1,4 +1,15 @@
 export default function NPCFab() {
+    let stats = [
+        {name: "STR", score: 10, mod: 0},
+        {name: "DEX", score: 10, mod: 0},
+        {name: "CON", score: 10, mod: 0},
+        {name: "INT", score: 10, mod: 0},
+        {name: "WIS", score: 10, mod: 0},
+        {name: "CHA", score: 10, mod: 0}
+    ];
+
+    let savingThrows = stats;
+
     return (
         <main>
             <h1 className="text-6xl">NPC Fabricator</h1>
@@ -39,25 +50,31 @@ export default function NPCFab() {
                     <label>Hit Points</label> <br/>
                     <label>Challenge Rating</label> <br/>
                     <input type="number" min="1" max="30" className="bg-inherit"></input> <br/>
+                    
                     <table className="border-2">
-                        <tr>
-                            <th className="border-2">STR</th>
-                            <th className="border-2">DEX</th>
-                            <th className="border-2">CON</th>
-                            <th className="border-2">INT</th>
-                            <th className="border-2">WIS</th>
-                            <th className="border-2">CHA</th>
-                        </tr>
-                        <tr>
-                            <th><input type="number" min="1" max="40" name="STR" className="bg-inherit border-2"></input></th>
-                            <th><input type="number" min="1" max="40" name="DEX" className="bg-inherit border-2"></input></th>
-                            <th><input type="number" min="1" max="40" name="CON" className="bg-inherit border-2"></input></th>
-                            <th><input type="number" min="1" max="40" name="INT" className="bg-inherit border-2"></input></th>
-                            <th><input type="number" min="1" max="40" name="WIS" className="bg-inherit border-2"></input></th>
-                            <th><input type="number" min="1" max="40" name="CHA" className="bg-inherit border-2"></input></th>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                {stats.map((stat) => (
+                                    <th key={stat.name} className="border-2">{stat.name}</th>
+                                ))}
+                            </tr>
+                            
+                            <tr>
+                                {stats.map((stat) => (
+                                    <th key={stat.name}><input type="number" min="1" max="40" name={stat.name} defaultValue={stat.score} className="bg-inherit border-2"></input></th>
+                                ))}
+                            </tr>
+                        </tbody>
                     </table>
+
                     <label>Saving Throws</label> <br/>
+                    {savingThrows.map((stat) => (
+                        <div key={stat.name}>
+                            <p>{stat.name} Proficient <input type="checkbox"></input>
+                            Expertise <input type="checkbox"></input></p>
+                        </div>
+                    ))}
+                    
                     <label>Skills</label> <br/>
                     <label>Damage Resistances</label> <br/>
                     <label>Damage Immunities</label> <br/>
