@@ -1,3 +1,60 @@
+'use client';
+import { FormEvent } from "react";
+
+interface Stat {
+    name: string,
+    score?: number,
+    modifier: number
+};
+
+interface Action {
+    name: string,
+    hit?: string
+    damage: [string]
+    savingThrow?: [string]
+    bonus?: boolean,
+    legendary?: boolean,
+    lair?: boolean,
+    mythic?: boolean
+};
+
+interface NPC {
+    name: string,
+    npcType: string,
+    alignment: string,
+    npcSize: string,
+    armorClass: number,
+    hitDice: string,
+    challengeRating: number,
+    savingThrows?: [Stat],
+    skills?: [Stat],
+    dmgResist?: [string],
+    dmgImmune?: [string],
+    dmgVulnerable?: [string],
+    conditionResist?: [string],
+    conditionImmune?: [string],
+    conditionVulnerable?: [string],
+    senses?: [string],
+    languages: [string],
+    traits?: [string],
+    actions?: [Action],
+    reactions?: [Action],
+    lair?: [Action],
+    mythic?: [Action]
+};
+
+function SaveMonster(e: FormEvent) {
+    e.preventDefault();
+}
+
+function AddSpeed() {
+    return (
+        <section className="w-fit m-auto p-4 border-2">
+            <h1 className="text-3xl text-center">Add Speed</h1>
+            <input type="number" name="walking" className="bg-inherit"/>ft.
+        </section>
+    )
+}
 export default function NPCFab() {
     let stats = [
         {name: "STR", score: 10, mod: 0},
@@ -34,15 +91,16 @@ export default function NPCFab() {
                          "Psychic", "Radiant", "Slashing", "Thunder"];
 
     const conditions = ["Blinded", "Charmed", "Deafened", "Frightened", "Grappled", "Incapacitated", "Paralyzed", 
-                        "Petrified", "Poisoned", "Prone", "Restrained", "Stunned", "Unconscious"]
+                        "Petrified", "Poisoned", "Prone", "Restrained", "Stunned", "Unconscious"];
 
     return (
-        <main>
+        <>
             <h1 className="text-6xl">NPC Fabricator</h1>
-            <h2 className="text-3xl">Statblock</h2>
-            <h2 className="text-3xl">Character Card</h2>
-            <section className="w/12 inline-block p-4">
-                <form>
+            <h2 className="text-3xl">
+                 Statblock Character Card
+            </h2>
+            <section>
+                <form onSubmit={SaveMonster}>
                     <label htmlFor="npc-name">Name</label> <br/>
                     <input type="text" name="npc-name" className="bg-inherit"></input> <br/>
 
@@ -60,7 +118,7 @@ export default function NPCFab() {
                         <option value="CE" className="text-black">Chaotic Evil</option>
                         <option value="LE" className="text-black">Lawful Evil</option>
                         <option value="NE" className="text-black">Neutral Evil</option>
-                    </select> <br/> <br/>
+                    </select> <br/>
 
                     <label htmlFor="npc-size">Size</label> <br/>
                     <select name="npc-size" defaultValue="M" className="bg-inherit">
@@ -70,21 +128,23 @@ export default function NPCFab() {
                         <option value="L" className="text-black">Large</option>
                         <option value="H" className="text-black">Huge</option>
                         <option value="G" className="text-black">Gargantuan</option>
-                    </select> <br/> <br/>
+                    </select> <br/>
 
-                    <label>Armor Class</label> <br/>
-                    <input type="number" name="npc-ac" className="bg-inherit"></input> <br/>
+                    <label htmlFor="npc-ac">Armor Class</label> <br/>
+                    <input type="number" name="npc-ac" min="1" max="40" className="bg-inherit w-fit"></input> <br/>
                     <label>Hit Points</label> <br/>
                     <label>Speed</label> <br/>
-                    <label>Challenge Rating</label> <br/>
-                    <input type="number" min="1" max="30" className="bg-inherit"></input> <br/>
                     
-                    <table className="border-2 bg-inherit">
+                    <AddSpeed/>
+                    <label htmlFor="npc-cr">Challenge Rating</label> <br/>
+                    <input type="number" min="1" max="30" name="npc-cr" className="bg-inherit"></input> <br/>
+                    
+                    <table className="border-2">
                         <tbody>
                             <tr>
                                 {
                                     stats.map((stat) => (
-                                        <th key={stat.name} className="border-2">{stat.name}</th>
+                                        <th key={stat.name} className="border-b-2 border-r-2">{stat.name}</th>
                                     ))
                                 }
                             </tr>
@@ -94,7 +154,7 @@ export default function NPCFab() {
                                     stats.map((stat) => (
                                         <th key={stat.name}>
                                             <input type="number" min="1" max="40" name={stat.name} 
-                                                   defaultValue={stat.score} className="bg-inherit border-2">
+                                                   defaultValue={stat.score} className="bg-inherit border-r-2">
                                             </input>
                                         </th>
                                     ))
@@ -163,10 +223,23 @@ export default function NPCFab() {
                         }
                     </select> <br/>
                     <label>Senses</label> <br/>
-                    <p>Blindsight <input type="number" name="b-sight" className="bg-inherit"></input>ft.</p>
-                    <p>Darkvision <input type="number" name="b-sight" className="bg-inherit"></input>ft.</p>
-                    <p>Tremorsense <input type="number" name="b-sight" className="bg-inherit"></input>ft.</p>
-                    <p>Truesight <input type="number" name="b-sight" className="bg-inherit"></input>ft.</p>
+                    <p>
+                        Blindsight 
+                        <input type="number" min="1" max="240" name="b-sight" className="bg-inherit w-fit"></input>ft.
+                    </p>
+
+                    <p>
+                        Darkvision 
+                        <input type="number" min="1" max="240" name="d-sight" className="bg-inherit w-fit"></input>ft.
+                    </p>
+                    <p>
+                        Tremorsense 
+                        <input type="number" min="1" max="240" name="tr-sight" className="bg-inherit w-fit"></input>ft.
+                    </p>
+                    <p>
+                        Truesight 
+                        <input type="number" min="1" max="240" name="t-sight" className="bg-inherit w-fit"></input>ft.
+                    </p>
                     <label>Languages</label> <br/>
                     <input type="text" className="bg-inherit"></input> <br/>
                     <label>Traits</label> <br/>
@@ -175,8 +248,12 @@ export default function NPCFab() {
                     <label>Legendary Actions</label> <br/>
                     <label>Lair Actions</label> <br/>
                     <label>Mythic Actions</label> <br/>
+                    <footer className="bg-purple-500 text-center w-full fixed bottom-0">
+                        <button name="save" type="submit" className="border-2 p-4">Save</button>
+                        <button className="border-2 p-4">Undo</button>
+                    </footer>
                 </form>
-            </section> 
-        </main>
+            </section>
+        </>
     );
 }
