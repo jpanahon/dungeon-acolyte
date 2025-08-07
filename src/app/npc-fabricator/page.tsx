@@ -1,5 +1,5 @@
 'use client';
-import { FormEvent } from "react";
+import { useState, FormEvent } from "react";
 
 let stats = [
     {name: "STR", score: 10, mod: 0},
@@ -52,7 +52,7 @@ interface Action {
     bonus?: boolean,
     legendary?: boolean,
     lair?: boolean,
-    mythic?: boolean
+    mythic?: boolean,
     description?: string
 };    
 
@@ -99,29 +99,53 @@ function AddSpeed() {
 }    
 
 function AddAction() {
+    const [damageType, setDamageType] = useState('Slashing');
+    const [statType, setStatType] = useState('STR');
+    const [dieCount, setDieCount] = useState("1")
+    const [sidedDie, setSidedDie] = useState("6");
+
     return (
         <section className="m-auto w-fit p-4 border-2">
             <h1 className="text-3xl text-center">Add Action</h1>
-            <label htmlFor="desc">Description</label> <br/>
-            <input type="text" name="desc" className="bg-inherit"/> <br/>
+            <label htmlFor="action-name">Name</label><br/>
+            <input type="text" name="action-name" className="bg-inherit"/><br/>
             <label htmlFor="action-dmg-type">Damage Type</label> <br/>
-            <select name="action-dmg-type" className="bg-inherit">
+            <select name="action-dmg-type" value={damageType} onChange={e => setDamageType(e.target.value)} 
+                    className="bg-inherit">
                 {
                     damageTypes.map((dmg) => (
                         <option key={dmg} value={dmg} className="text-black">{dmg}</option>
                     ))
-
-                    SelectOption(actiondmgtype);
                 }
             </select> <br/>
             <label htmlFor="action-stat-modifier">Action Stat Modifier</label> <br/>
-            <select name="action-stat-modifier" className="bg-inherit">
+            <select name="action-stat-modifier" value={statType} onChange={e => setStatType(e.target.value)}
+                    className="bg-inherit">
                 {
                     stats.map((stat) => (
                         <option key={stat.name} value={stat.score} className="text-black">{stat.name}</option>
                     ))
                 }
-            </select>
+            </select> <br/>
+            <label htmlFor="die-count">Damage </label>
+            <input type="number" 
+                   name="die-count" 
+                   className="w-1/12 bg-inherit"
+                   value={dieCount}
+                   onChange={e => setDieCount(e.target.value)}
+            />d
+            <input type="number" 
+                   name="die-side"
+                   className="w-1/12 bg-inherit"
+                   value={sidedDie}
+                   onChange={e => setSidedDie(e.target.value)}
+            /> <br/>
+            <label htmlFor="desc">Description</label> <br/>
+            <input type="text" name="desc" className="bg-inherit"/> <br/>
+            <label htmlFor="proficient">Proficient? </label>
+            <input type="checkbox" name="proficient"/> <br/>
+            <label htmlFor="expert">Expert? </label>
+            <input type="checkbox" name="expert"/>
         </section>        
     )
 }    
@@ -133,7 +157,7 @@ export default function NPCFab() {
                  Statblock Character Card
             </h2>
             <section>
-                <form onSubmit={SaveMonster}>
+                <form method="POST" onSubmit={SaveMonster}>
                     <h1>
                         Basic Information
                     </h1>
@@ -198,7 +222,8 @@ export default function NPCFab() {
                     <label>Speed</label> <br/>
                     
                     <AddSpeed/>
-            
+                    
+                    <hr/>
                     <label>Saving Throws</label> <br/>
                     {
                         savingThrows.map((stat) => (
