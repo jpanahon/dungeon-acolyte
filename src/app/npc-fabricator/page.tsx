@@ -1,5 +1,7 @@
 'use client';
+import { create } from "domain";
 import { useState, FormEvent } from "react";
+import { createPortal } from 'react-dom';
 
 let stats = [
     {name: "STR", score: 10, mod: 0},
@@ -98,7 +100,7 @@ function AddSpeed() {
     )
 }    
 
-function AddAction() {
+function AddAction({ onClose }) {
     const [damageType, setDamageType] = useState('Slashing');
     const [statType, setStatType] = useState('STR');
     const [dieCount, setDieCount] = useState("1")
@@ -145,11 +147,18 @@ function AddAction() {
             <label htmlFor="proficient">Proficient? </label>
             <input type="checkbox" name="proficient"/> <br/>
             <label htmlFor="expert">Expert? </label>
-            <input type="checkbox" name="expert"/>
+            <input type="checkbox" name="expert"/> <br/>
+            <button type="button">Save</button>
+            <button type="button" onClick={onClose}>Close</button>
         </section>        
     )
 }    
 export default function NPCFab() {
+    const [addAction, setAddAction] = useState(false);
+    const [addReaction, setAddReaction] = useState(false);
+    const [addLegendary, setAddLegendary] = useState(false);
+    const [addLair, setAddLair] = useState(false);
+    const [addMythic, setAddMythic] = useState(false);
     return (
         <>
             <h1 className="text-6xl">NPC Fabricator</h1>
@@ -305,15 +314,55 @@ export default function NPCFab() {
                     <input type="text" className="bg-inherit"></input> <br/>
                     <label>Traits</label> <br/>
                     <label>Actions</label> <br/>
-                    <AddAction/>
+                    <button type="button" onClick={() => setAddAction(true)}>
+                        Add Action
+                    </button>
+                    {
+                        addAction && createPortal(
+                            <AddAction onClose={() => setAddAction(false)}/>,
+                            document.body
+                        )
+                    }
                     <label>Reactions</label> <br/>
-                    <AddAction/>
+                    <button type="button" onClick={() => setAddReaction(true)}>
+                        Add Reaction
+                    </button>
+                    {
+                        addReaction && createPortal(
+                            <AddAction onClose={() => setAddReaction(false)}/>,
+                            document.body
+                        )
+                    } <br/>
                     <label>Legendary Actions</label> <br/>
-                    <AddAction/>
+                    <button type="button" onClick={() => setAddLegendary(true)}>
+                        Add Legendary Action
+                    </button>
+                    {
+                        addLegendary && createPortal(
+                            <AddAction onClose={() => setAddLegendary(false)}/>,
+                            document.body
+                        )
+                    } <br/>
                     <label>Lair Actions</label> <br/>
-                    <AddAction/>
+                    <button type="button" onClick={() => setAddLair(true)}>
+                        Add Lair Action
+                    </button>
+                    {
+                        addLair && createPortal(
+                            <AddAction onClose={() => setAddLair(false)}/>,
+                            document.body
+                        )
+                    } <br/>
                     <label>Mythic Actions</label> <br/>
-                    <AddAction/>
+                    <button type="button" onClick={() => setAddMythic(true)}>
+                        Add Action
+                    </button>
+                    {
+                        addMythic && createPortal(
+                            <AddAction onClose={() => setAddMythic(false)}/>,
+                            document.body
+                        )
+                    } <br/>
                     <footer className="bg-purple-500 text-center w-full fixed bottom-0">
                         <button name="save" type="submit" className="border-2 p-4">Save</button>
                         <button className="border-2 p-4">Undo</button>
