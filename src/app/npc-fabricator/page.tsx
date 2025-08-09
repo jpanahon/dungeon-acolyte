@@ -91,11 +91,12 @@ function SaveMonster(e: FormEvent) {
     e.preventDefault();
 }    
 
-function AddSpeed() {
+function AddSpeed({ onClose }) {
     return (
         <section className="w-fit m-auto p-4 border-2">
             <h1 className="text-3xl text-center">Add Speed</h1>
             <input type="number" name="walking" className="bg-inherit"/>ft.
+            <button type="button" onClick={onClose}>Close</button>
         </section>        
     )
 }    
@@ -107,7 +108,7 @@ function AddAction({ onClose }) {
     const [sidedDie, setSidedDie] = useState("6");
 
     return (
-        <section className="m-auto w-fit p-4 border-2">
+        <section className="m-auto w-fit p-4 border-2 z-1">
             <h1 className="text-3xl text-center">Add Action</h1>
             <label htmlFor="action-name">Name</label><br/>
             <input type="text" name="action-name" className="bg-inherit"/><br/>
@@ -159,6 +160,8 @@ export default function NPCFab() {
     const [addLegendary, setAddLegendary] = useState(false);
     const [addLair, setAddLair] = useState(false);
     const [addMythic, setAddMythic] = useState(false);
+    const [addSpeed, setAddSpeed] = useState(false);
+
     return (
         <>
             <h1 className="text-6xl">NPC Fabricator</h1>
@@ -229,9 +232,14 @@ export default function NPCFab() {
                     <input type="number" min="1" max="30" name="npc-cr" className="bg-inherit"></input> <br/>
                     <h1>Modifiers</h1>
                     <label>Speed</label> <br/>
-                    
-                    <AddSpeed/>
-                    
+                    <button type="button" onClick={() => setAddSpeed(true)}>Add Speed</button>
+                    {
+                        addSpeed && createPortal(
+                            <AddSpeed onClose={() => setAddSpeed(false)}/>,
+                            document.body
+                        )
+                    }
+
                     <hr/>
                     <label>Saving Throws</label> <br/>
                     {
@@ -322,7 +330,7 @@ export default function NPCFab() {
                             <AddAction onClose={() => setAddAction(false)}/>,
                             document.body
                         )
-                    }
+                    } <br/>
                     <label>Reactions</label> <br/>
                     <button type="button" onClick={() => setAddReaction(true)}>
                         Add Reaction
