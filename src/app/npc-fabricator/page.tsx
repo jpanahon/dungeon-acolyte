@@ -83,17 +83,17 @@ interface Statblock {
     mythic?: [Action]
 };    
 
-function SelectOption(dropdown: HTMLSelectElement) {
-    console.log(`Hey you selected ${dropdown.options[dropdown.selectedIndex].text}`);
-}
-
-function SaveMonster(e: FormEvent) {
+function SaveMonster(e) {
     e.preventDefault();
-}    
+
+    let stats = new FormData(e.currentTarget);
+
+    let statblock = Statblock{};
+}
 
 function AddSpeed({ onClose }) {
     return (
-        <section className="w-fit m-auto p-4 border-2">
+        <section className="absolute left-50 top-50 translate-x-1/2 -translate-y-1/2 w-fit p-4 border-2 z-10">
             <h1 className="text-3xl text-center">Add Speed</h1>
             <input type="number" name="walking" className="bg-inherit"/>ft.
             <button type="button" onClick={onClose}>Close</button>
@@ -104,7 +104,7 @@ function AddSpeed({ onClose }) {
 function AddAction({ onClose }) {
     const [damageType, setDamageType] = useState('Slashing');
     const [statType, setStatType] = useState('STR');
-    const [dieCount, setDieCount] = useState("1")
+    const [dieCount, setDieCount] = useState("1");
     const [sidedDie, setSidedDie] = useState("6");
 
     return (
@@ -155,6 +155,7 @@ function AddAction({ onClose }) {
     )
 }    
 export default function NPCFab() {
+    // Action Modals
     const [addAction, setAddAction] = useState(false);
     const [addReaction, setAddReaction] = useState(false);
     const [addLegendary, setAddLegendary] = useState(false);
@@ -168,158 +169,187 @@ export default function NPCFab() {
             <h2 className="text-3xl">
                  Statblock Character Card
             </h2>
-            <section>
+            <section className="w-1/2">
                 <form method="POST" onSubmit={SaveMonster}>
-                    <h1>
-                        Basic Information
-                    </h1>
-                    <label htmlFor="npc-name">Name</label> <br/>
-                    <input type="text" name="npc-name" className="bg-inherit inline-block"></input>
+                    <section className="p-4">
+                        <h1 className="text-3xl">Basic Information</h1>
+                        <div className="inline-block p-4">
+                            <label htmlFor="npc-name">Name</label> <br/>
+                            <input type="text" name="npc-name" className="bg-inherit"></input>
+                        </div>
 
-                    <label>Type</label> <br/>
-                    <input type="text" name="npc-type" className="bg-inherit inline-block"></input> <br/>
+                        <div className="inline-block p-4">
+                            <label htmlFor="npc-species">Species</label> <br/>
+                            <input type="text" name="npc-species" className="bg-inherit"></input>
+                        </div>
 
-                    <label htmlFor="npc-alignment">Alignment</label> <br/>
-                    <select name="npc-alignment" defaultValue="N" className="bg-inherit">
-                        <option value="CG" className="text-black">Chaotic Good</option>
-                        <option value="LG" className="text-black">Lawful Good</option>
-                        <option value="NG" className="text-black">Neutral Good</option>
-                        <option value="CN" className="text-black">Chaotic Neutral</option>
-                        <option value="LN" className="text-black">Lawful Neutral</option>
-                        <option value="N" className="text-black">True Neutral</option>
-                        <option value="CE" className="text-black">Chaotic Evil</option>
-                        <option value="LE" className="text-black">Lawful Evil</option>
-                        <option value="NE" className="text-black">Neutral Evil</option>
-                    </select> <br/>
+                        <div className="inline-block p-4">
+                            <label htmlFor="npc-alignment">Alignment</label> <br/>
+                            <select name="npc-alignment" defaultValue="N" className="bg-inherit">
+                                <option value="CG" className="text-black">Chaotic Good</option>
+                                <option value="LG" className="text-black">Lawful Good</option>
+                                <option value="NG" className="text-black">Neutral Good</option>
+                                <option value="CN" className="text-black">Chaotic Neutral</option>
+                                <option value="LN" className="text-black">Lawful Neutral</option>
+                                <option value="N" className="text-black">True Neutral</option>
+                                <option value="CE" className="text-black">Chaotic Evil</option>
+                                <option value="LE" className="text-black">Lawful Evil</option>
+                                <option value="NE" className="text-black">Neutral Evil</option>
+                            </select>
+                        </div>
 
-                    <label htmlFor="npc-size">Size</label> <br/>
-                    <select name="npc-size" defaultValue="M" className="bg-inherit">
-                        <option value="T" className="text-black">Tiny</option>
-                        <option value="S" className="text-black">Small</option>
-                        <option value="M" className="text-black">Medium</option>
-                        <option value="L" className="text-black">Large</option>
-                        <option value="H" className="text-black">Huge</option>
-                        <option value="G" className="text-black">Gargantuan</option>
-                    </select> <br/>
+                        <div className="inline-block p-4">
+                            <label htmlFor="npc-size">Size</label> <br/>
+                            <select name="npc-size" defaultValue="M" className="bg-inherit">
+                                <option value="T" className="text-black">Tiny</option>
+                                <option value="S" className="text-black">Small</option>
+                                <option value="M" className="text-black">Medium</option>
+                                <option value="L" className="text-black">Large</option>
+                                <option value="H" className="text-black">Huge</option>
+                                <option value="G" className="text-black">Gargantuan</option>
+                            </select>
+                        </div>
+                        
+                        <div className="inline-block p-4">
+                            <label htmlFor="npc-ac">Armor Class</label> <br/>
+                            <input type="number" name="npc-ac" 
+                                   min="1" max="40" defaultValue="10"
+                                   className="bg-inherit w-fit"
+                            />
+                        </div>
 
-                    <label htmlFor="npc-ac">Armor Class</label> <br/>
-                    <input type="number" name="npc-ac" min="1" max="40" className="bg-inherit w-fit"></input> <br/>
-                    <table className="border-2">
-                        <tbody>
-                            <tr>
-                                {
-                                    stats.map((stat) => (
-                                        <th key={stat.name} className="border-b-2 border-r-2">{stat.name}</th>
-                                    ))
-                                }
-                            </tr>
-                            
-                            <tr>
-                                {
-                                    stats.map((stat) => (
-                                        <th key={stat.name}>
-                                            <input type="number" min="1" max="40" name={stat.name} 
-                                                   defaultValue={stat.score} className="bg-inherit border-r-2">
-                                            </input>
-                                        </th>
-                                    ))
-                                }
-                            </tr>
-                        </tbody>
-                    </table>
-                    <label>Hit Points</label> <br/>
-                    <label htmlFor="npc-cr">Challenge Rating</label> <br/>
-                    <input type="number" min="1" max="30" name="npc-cr" className="bg-inherit"></input> <br/>
-                    <h1>Modifiers</h1>
-                    <label>Speed</label> <br/>
-                    <button type="button" onClick={() => setAddSpeed(true)}>Add Speed</button>
-                    {
-                        addSpeed && createPortal(
-                            <AddSpeed onClose={() => setAddSpeed(false)}/>,
-                            document.body
-                        )
-                    }
+                        <div className="inline-block p-4">
+                            <label>Hit Points</label> <br/>
+                        </div>
+
+                        <div className="inline-block p-4">
+                            <label htmlFor="npc-cr">Challenge Rating</label> <br/>
+                            <input type="number" min="1" max="30" name="npc-cr" className="bg-inherit"></input>
+                        </div>
+
+                        <div className="inline-block p-4">
+                            <label>Languages</label> <br/>
+                            <input type="text" className="bg-inherit"></input>
+                        </div>
+
+                        <table className="border-2">
+                            <tbody>
+                                <tr>
+                                    {
+                                        stats.map((stat) => (
+                                            <th key={stat.name} className="border-b-2 border-r-2">{stat.name}</th>
+                                        ))
+                                    }
+                                </tr>
+                                
+                                <tr>
+                                    {
+                                        stats.map((stat) => (
+                                            <th key={stat.name}>
+                                                <input type="number" min="1" max="40" name={stat.name} 
+                                                    defaultValue={stat.score} className="bg-inherit border-r-2">
+                                                </input>
+                                            </th>
+                                        ))
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
 
                     <hr/>
-                    <label>Saving Throws</label> <br/>
-                    {
-                        savingThrows.map((stat) => (
-                            <div key={stat.name}>
-                                <p>{stat.name} | Proficient <input type="checkbox"></input>
-                                Expertise <input type="checkbox"></input></p>
-                            </div>
-                        ))
-                    }
-                    
-                    <label>Skills</label> <br/>
-                    {
-                        skills.map((stat) => (
-                            <div key={stat.name}>
-                                <p>{stat.name} | Proficient <input type="checkbox"></input>
-                                Expertise <input type="checkbox"></input></p>
-                            </div>
-                        ))
-                    }
-                    <label>Damage Resistances</label> <br/>
-                    <select name="damage-res" className="bg-inherit">
-                        {
-                            damageTypes.map((dmg) => (
-                                <option key={dmg} value={dmg} className="text-black">{dmg}</option>
-                            ))
-                        }
-                    </select> <br/>
-                    <label>Damage Immunities</label> <br/>
-                    <select name="damage-imm" className="bg-inherit">
-                        {
-                            damageTypes.map((dmg) => (
-                                <option key={dmg} value={dmg} className="text-black">{dmg}</option>
-                            ))
-                        }
-                    </select> <br/>
-                    <label>Condition Immunities</label> <br/>
-                    <select name="cond-imm" className="bg-inherit">
-                        {
-                            conditions.map((cond) => (
-                                <option key={cond} value={cond} className="text-black">{cond}</option>
-                            ))
-                        }
-                    </select> <br/>
-                    <label>Damage Vulnerabilities</label> <br/>
-                    <select name="damage-vul" className="bg-inherit">
-                        {
-                            damageTypes.map((cond) => (
-                                <option key={cond} value={cond} className="text-black">{cond}</option>
-                            ))
-                        }
-                    </select> <br/>
-                    <label>Condition Vulnerabilities</label> <br/>
-                    <select name="cond-vul" className="bg-inherit">
-                        {
-                            conditions.map((cond) => (
-                                <option key={cond} value={cond} className="text-black">{cond}</option>
-                            ))
-                        }
-                    </select> <br/>
-                    <label>Senses</label> <br/>
-                    <p>
-                        Blindsight 
-                        <input type="number" min="1" max="240" name="b-sight" className="bg-inherit w-fit"></input>ft.
-                    </p>
 
-                    <p>
-                        Darkvision 
-                        <input type="number" min="1" max="240" name="d-sight" className="bg-inherit w-fit"></input>ft.
-                    </p>
-                    <p>
-                        Tremorsense 
-                        <input type="number" min="1" max="240" name="tr-sight" className="bg-inherit w-fit"></input>ft.
-                    </p>
-                    <p>
-                        Truesight 
-                        <input type="number" min="1" max="240" name="t-sight" className="bg-inherit w-fit"></input>ft.
-                    </p>
-                    <label>Languages</label> <br/>
-                    <input type="text" className="bg-inherit"></input> <br/>
+                    <section>
+                        <h1 className="text-3xl">Modifiers</h1>
+                        <div className="inline-block p-4">
+                            <label>Speed</label> <br/>
+                            <button type="button" onClick={() => setAddSpeed(true)}>Add Speed</button>
+                            {
+                                addSpeed && createPortal(
+                                    <AddSpeed onClose={() => setAddSpeed(false)}/>,
+                                    document.body
+                                )
+                            }
+                        </div>
+
+                        <label>Saving Throws</label> <br/>
+                        {
+                            savingThrows.map((stat) => (
+                                <div key={stat.name}>
+                                    <p>{stat.name} | Proficient <input type="checkbox"></input>
+                                    Expertise <input type="checkbox"></input></p>
+                                </div>
+                            ))
+                        }
+                        
+                        <label>Skills</label> <br/>
+                        {
+                            skills.map((stat) => (
+                                <div key={stat.name}>
+                                    <p>{stat.name} | Proficient <input type="checkbox"></input>
+                                    Expertise <input type="checkbox"></input></p>
+                                </div>
+                            ))
+                        }
+                        <label>Damage Resistances</label> <br/>
+                        <select name="damage-res" className="bg-inherit">
+                            {
+                                damageTypes.map((dmg) => (
+                                    <option key={dmg} value={dmg} className="text-black">{dmg}</option>
+                                ))
+                            }
+                        </select> <br/>
+                        <label>Damage Immunities</label> <br/>
+                        <select name="damage-imm" className="bg-inherit">
+                            {
+                                damageTypes.map((dmg) => (
+                                    <option key={dmg} value={dmg} className="text-black">{dmg}</option>
+                                ))
+                            }
+                        </select> <br/>
+                        <label>Condition Immunities</label> <br/>
+                        <select name="cond-imm" className="bg-inherit">
+                            {
+                                conditions.map((cond) => (
+                                    <option key={cond} value={cond} className="text-black">{cond}</option>
+                                ))
+                            }
+                        </select> <br/>
+                        <label>Damage Vulnerabilities</label> <br/>
+                        <select name="damage-vul" className="bg-inherit">
+                            {
+                                damageTypes.map((cond) => (
+                                    <option key={cond} value={cond} className="text-black">{cond}</option>
+                                ))
+                            }
+                        </select> <br/>
+                        <label>Condition Vulnerabilities</label> <br/>
+                        <select name="cond-vul" className="bg-inherit">
+                            {
+                                conditions.map((cond) => (
+                                    <option key={cond} value={cond} className="text-black">{cond}</option>
+                                ))
+                            }
+                        </select> <br/>
+                        <label>Senses</label> <br/>
+                        <p>
+                            Blindsight 
+                            <input type="number" min="1" max="240" name="b-sight" className="bg-inherit w-fit"/>ft.
+                        </p>
+
+                        <p>
+                            Darkvision 
+                            <input type="number" min="1" max="240" name="d-sight" className="bg-inherit w-fit"/>ft.
+                        </p>
+                        <p>
+                            Tremorsense 
+                            <input type="number" min="1" max="240" name="tr-sight" className="bg-inherit w-fit"/>ft.
+                        </p>
+                        <p>
+                            Truesight 
+                            <input type="number" min="1" max="240" name="t-sight" className="bg-inherit w-fit"/>ft.
+                        </p>
+                    </section>
                     <label>Traits</label> <br/>
                     <label>Actions</label> <br/>
                     <button type="button" onClick={() => setAddAction(true)}>
