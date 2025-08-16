@@ -271,84 +271,106 @@ export default function NPCFab() {
                                 )
                             }
                         </div>
-
-                        <label>Saving Throws</label> <br/>
-                        {
-                            savingThrows.map((stat) => (
-                                <div key={stat.name}>
-                                    <p>{stat.name} | Proficient <input type="checkbox"></input>
-                                    Expertise <input type="checkbox"></input></p>
-                                </div>
-                            ))
-                        }
                         
-                        <label>Skills</label> <br/>
-                        {
-                            skills.map((stat) => (
-                                <div key={stat.name}>
-                                    <p>{stat.name} | Proficient <input type="checkbox"></input>
-                                    Expertise <input type="checkbox"></input></p>
-                                </div>
-                            ))
-                        }
-                        <label>Damage Resistances</label> <br/>
-                        <select name="damage-res" className="bg-inherit">
+                        <div className="inline-block p-4">
+                            <label>Saving Throws</label> <br/>
                             {
-                                damageTypes.map((dmg) => (
-                                    <option key={dmg} value={dmg} className="text-black">{dmg}</option>
+                                savingThrows.map((stat) => (
+                                    <div key={stat.name}>
+                                        <p>{stat.name} | Proficient <input type="checkbox"></input>
+                                        Expertise <input type="checkbox"></input></p>
+                                    </div>
                                 ))
                             }
-                        </select> <br/>
-                        <label>Damage Immunities</label> <br/>
-                        <select name="damage-imm" className="bg-inherit">
+                        </div>
+                        
+                        <div className="inline-block p-4">
+                            <label>Skills</label> <br/>
                             {
-                                damageTypes.map((dmg) => (
-                                    <option key={dmg} value={dmg} className="text-black">{dmg}</option>
+                                skills.map((stat) => (
+                                    <div key={stat.name}>
+                                        <p>{stat.name} | Proficient <input type="checkbox"></input>
+                                        Expertise <input type="checkbox"></input></p>
+                                    </div>
                                 ))
                             }
-                        </select> <br/>
-                        <label>Condition Immunities</label> <br/>
-                        <select name="cond-imm" className="bg-inherit">
-                            {
-                                conditions.map((cond) => (
-                                    <option key={cond} value={cond} className="text-black">{cond}</option>
-                                ))
-                            }
-                        </select> <br/>
-                        <label>Damage Vulnerabilities</label> <br/>
-                        <select name="damage-vul" className="bg-inherit">
-                            {
-                                damageTypes.map((cond) => (
-                                    <option key={cond} value={cond} className="text-black">{cond}</option>
-                                ))
-                            }
-                        </select> <br/>
-                        <label>Condition Vulnerabilities</label> <br/>
-                        <select name="cond-vul" className="bg-inherit">
-                            {
-                                conditions.map((cond) => (
-                                    <option key={cond} value={cond} className="text-black">{cond}</option>
-                                ))
-                            }
-                        </select> <br/>
-                        <label>Senses</label> <br/>
-                        <p>
-                            Blindsight 
-                            <input type="number" min="1" max="240" name="b-sight" className="bg-inherit w-fit"/>ft.
-                        </p>
+                        </div>
+                        
+                        <div className="inline-block p-4">
+                            <label>Damage Resistances</label> <br/>
+                            <select name="damage-res" className="bg-inherit">
+                                {
+                                    damageTypes.map((dmg) => (
+                                        <option key={dmg} value={dmg} className="text-black">{dmg}</option>
+                                    ))
+                                }
+                            </select> <br/>
+                        </div>
 
-                        <p>
-                            Darkvision 
-                            <input type="number" min="1" max="240" name="d-sight" className="bg-inherit w-fit"/>ft.
-                        </p>
-                        <p>
-                            Tremorsense 
-                            <input type="number" min="1" max="240" name="tr-sight" className="bg-inherit w-fit"/>ft.
-                        </p>
-                        <p>
-                            Truesight 
-                            <input type="number" min="1" max="240" name="t-sight" className="bg-inherit w-fit"/>ft.
-                        </p>
+                        <div className="inline-block p-4">
+                            <label>Damage Immunities</label> <br/>
+                            <select name="damage-imm" className="bg-inherit">
+                                {
+                                    damageTypes.map((dmg) => (
+                                        <option key={dmg} value={dmg} className="text-black">{dmg}</option>
+                                    ))
+                                }
+                            </select> <br/>
+                        </div>
+
+                        <div className="inline-block p-4">
+                            <label>Condition Immunities</label> <br/>
+                            <select name="cond-imm" className="bg-inherit">
+                                {
+                                    conditions.map((cond) => (
+                                        <option key={cond} value={cond} className="text-black">{cond}</option>
+                                    ))
+                                }
+                            </select> <br/>
+                        </div>
+
+                        <div className="inline-block p-4">
+                            <label>Damage Vulnerabilities</label> <br/>
+                            <select name="damage-vul" className="bg-inherit">
+                                {
+                                    damageTypes.map((cond) => (
+                                        <option key={cond} value={cond} className="text-black">{cond}</option>
+                                    ))
+                                }
+                            </select> <br/>
+                        </div>
+
+                        <div className="inline-block p-4">
+                            <label>Condition Vulnerabilities</label> <br/>
+                            <select name="cond-vul" className="bg-inherit">
+                                {
+                                    conditions.map((cond) => (
+                                        <option key={cond} value={cond} className="text-black">{cond}</option>
+                                    ))
+                                }
+                            </select> <br/>
+                        </div>
+
+                        <div className="inline-block p-4">
+                            <label>Senses</label> <br/>
+                            <p>
+                                Blindsight 
+                                <input type="number" min="1" max="240" name="b-sight" className="bg-inherit w-fit"/>ft.
+                            </p>
+
+                            <p>
+                                Darkvision 
+                                <input type="number" min="1" max="240" name="d-sight" className="bg-inherit w-fit"/>ft.
+                            </p>
+                            <p>
+                                Tremorsense 
+                                <input type="number" min="1" max="240" name="tr-sight" className="bg-inherit w-fit"/>ft.
+                            </p>
+                            <p>
+                                Truesight 
+                                <input type="number" min="1" max="240" name="t-sight" className="bg-inherit w-fit"/>ft.
+                            </p>
+                        </div>
                     </section>
                     <label>Traits</label> <br/>
                     <label>Actions</label> <br/>
