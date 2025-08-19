@@ -93,23 +93,25 @@ function SaveMonster(e) {
 
 function AddSpeed({ onClose }) {
     return (
-        <section className="absolute left-50 top-50 translate-x-1/2 -translate-y-1/2 w-fit p-4 border-2 z-10">
+        <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 
+                            -translate-y-1/2 w-fit p-4 border-2 z-10 bg-inherit">
             <h1 className="text-3xl text-center">Add Speed</h1>
             <input type="number" name="walking" className="bg-inherit"/>ft.
-            <button type="button" onClick={onClose}>Close</button>
+            <button type="button" onClick={onClose} className="absolute right-0 top-0 p-4 text-3xl">&times;</button>
         </section>        
     )
 }    
 
-function AddAction({ onClose }) {
+function AddAction({ onClose, actionType }) {
     const [damageType, setDamageType] = useState('Slashing');
     const [statType, setStatType] = useState('STR');
     const [dieCount, setDieCount] = useState("1");
     const [sidedDie, setSidedDie] = useState("6");
 
     return (
-        <section className="m-auto w-fit p-4 border-2 z-1">
-            <h1 className="text-3xl text-center">Add Action</h1>
+        <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 
+                            -translate-y-1/2 w-fit p-4 border-2 z-10 bg-inherit">
+            <h1 className="text-3xl text-center">Add {actionType}</h1>
             <label htmlFor="action-name">Name</label><br/>
             <input type="text" name="action-name" className="bg-inherit"/><br/>
             <label htmlFor="action-dmg-type">Damage Type</label> <br/>
@@ -150,7 +152,7 @@ function AddAction({ onClose }) {
             <label htmlFor="expert">Expert? </label>
             <input type="checkbox" name="expert"/> <br/>
             <button type="button">Save</button>
-            <button type="button" onClick={onClose}>Close</button>
+            <button type="button" onClick={onClose} className="absolute right-0 top-0 p-4 text-3xl">&times;</button>
         </section>        
     )
 }    
@@ -274,26 +276,24 @@ export default function NPCFab() {
                         
                         <div className="inline-block p-4">
                             <label>Saving Throws</label> <br/>
+                            <select className="bg-inherit" name="saving-throws">
                             {
                                 savingThrows.map((stat) => (
-                                    <div key={stat.name}>
-                                        <p>{stat.name} | Proficient <input type="checkbox"></input>
-                                        Expertise <input type="checkbox"></input></p>
-                                    </div>
+                                    <option key={stat.name} value={stat.name}>{stat.name}</option>
                                 ))
                             }
+                            </select>
                         </div>
                         
                         <div className="inline-block p-4">
                             <label>Skills</label> <br/>
+                            <select className="bg-inherit" name="skills">
                             {
                                 skills.map((stat) => (
-                                    <div key={stat.name}>
-                                        <p>{stat.name} | Proficient <input type="checkbox"></input>
-                                        Expertise <input type="checkbox"></input></p>
-                                    </div>
+                                    <option key={stat.name} value={stat.name}>{stat.name}</option>
                                 ))
                             }
+                            </select>
                         </div>
                         
                         <div className="inline-block p-4">
@@ -379,7 +379,7 @@ export default function NPCFab() {
                     </button>
                     {
                         addAction && createPortal(
-                            <AddAction onClose={() => setAddAction(false)}/>,
+                            <AddAction onClose={() => setAddAction(false)} actionType={"Action"}/>,
                             document.body
                         )
                     } <br/>
@@ -389,7 +389,7 @@ export default function NPCFab() {
                     </button>
                     {
                         addReaction && createPortal(
-                            <AddAction onClose={() => setAddReaction(false)}/>,
+                            <AddAction onClose={() => setAddReaction(false)} actionType={"Reaction"}/>,
                             document.body
                         )
                     } <br/>
@@ -399,7 +399,7 @@ export default function NPCFab() {
                     </button>
                     {
                         addLegendary && createPortal(
-                            <AddAction onClose={() => setAddLegendary(false)}/>,
+                            <AddAction onClose={() => setAddLegendary(false)} actionType={"Legendary Action"}/>,
                             document.body
                         )
                     } <br/>
@@ -409,7 +409,7 @@ export default function NPCFab() {
                     </button>
                     {
                         addLair && createPortal(
-                            <AddAction onClose={() => setAddLair(false)}/>,
+                            <AddAction onClose={() => setAddLair(false)} actionType={"Lair Action"}/>,
                             document.body
                         )
                     } <br/>
@@ -419,7 +419,7 @@ export default function NPCFab() {
                     </button>
                     {
                         addMythic && createPortal(
-                            <AddAction onClose={() => setAddMythic(false)}/>,
+                            <AddAction onClose={() => setAddMythic(false)} actionType={"Mythic Action"}/>,
                             document.body
                         )
                     } <br/>
