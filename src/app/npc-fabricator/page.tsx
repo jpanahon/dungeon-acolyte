@@ -93,7 +93,7 @@ function SaveMonster(e) {
 
 function AddSpeed({ onClose }) {
     return (
-        <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 
+        <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 
                             -translate-y-1/2 w-fit p-4 border-2 z-10 bg-inherit">
             <h1 className="text-3xl text-center">Add Speed</h1>
             <input type="number" name="walking" className="bg-inherit"/>ft.
@@ -109,7 +109,7 @@ function AddAction({ onClose, actionType }) {
     const [sidedDie, setSidedDie] = useState("6");
 
     return (
-        <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 
+        <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 
                             -translate-y-1/2 w-fit p-4 border-2 z-10 bg-inherit">
             <h1 className="text-3xl text-center">Add {actionType}</h1>
             <label htmlFor="action-name">Name</label><br/>
@@ -171,10 +171,10 @@ export default function NPCFab() {
             <h2 className="text-3xl">
                  Statblock Character Card
             </h2>
-            <section className="w-1/2">
+            <section className="w-1/3">
                 <form method="POST" onSubmit={SaveMonster}>
-                    <section className="p-4">
-                        <h1 className="text-3xl">Basic Information</h1>
+                    <details className="p-4" open>
+                        <summary className="text-3xl p-4">Basic Information</summary>
                         <div className="inline-block p-4">
                             <label htmlFor="npc-name">Name</label> <br/>
                             <input type="text" name="npc-name" className="bg-inherit"></input>
@@ -257,12 +257,12 @@ export default function NPCFab() {
                                 </tr>
                             </tbody>
                         </table>
-                    </section>
+                    </details>
 
                     <hr/>
 
-                    <section>
-                        <h1 className="text-3xl">Modifiers</h1>
+                    <details className="p-4" open>
+                        <summary className="text-3xl p-4">Modifiers</summary>
                         <div className="inline-block p-4">
                             <label>Speed</label> <br/>
                             <button type="button" onClick={() => setAddSpeed(true)}>Add Speed</button>
@@ -371,58 +371,76 @@ export default function NPCFab() {
                                 <input type="number" min="1" max="240" name="t-sight" className="bg-inherit w-fit"/>ft.
                             </p>
                         </div>
-                    </section>
-                    <label>Traits</label> <br/>
-                    <label>Actions</label> <br/>
-                    <button type="button" onClick={() => setAddAction(true)}>
-                        Add Action
-                    </button>
-                    {
-                        addAction && createPortal(
-                            <AddAction onClose={() => setAddAction(false)} actionType={"Action"}/>,
-                            document.body
-                        )
-                    } <br/>
-                    <label>Reactions</label> <br/>
-                    <button type="button" onClick={() => setAddReaction(true)}>
-                        Add Reaction
-                    </button>
-                    {
-                        addReaction && createPortal(
-                            <AddAction onClose={() => setAddReaction(false)} actionType={"Reaction"}/>,
-                            document.body
-                        )
-                    } <br/>
-                    <label>Legendary Actions</label> <br/>
-                    <button type="button" onClick={() => setAddLegendary(true)}>
-                        Add Legendary Action
-                    </button>
-                    {
-                        addLegendary && createPortal(
-                            <AddAction onClose={() => setAddLegendary(false)} actionType={"Legendary Action"}/>,
-                            document.body
-                        )
-                    } <br/>
-                    <label>Lair Actions</label> <br/>
-                    <button type="button" onClick={() => setAddLair(true)}>
-                        Add Lair Action
-                    </button>
-                    {
-                        addLair && createPortal(
-                            <AddAction onClose={() => setAddLair(false)} actionType={"Lair Action"}/>,
-                            document.body
-                        )
-                    } <br/>
-                    <label>Mythic Actions</label> <br/>
-                    <button type="button" onClick={() => setAddMythic(true)}>
-                        Add Action
-                    </button>
-                    {
-                        addMythic && createPortal(
-                            <AddAction onClose={() => setAddMythic(false)} actionType={"Mythic Action"}/>,
-                            document.body
-                        )
-                    } <br/>
+                    </details>
+                    <hr/>
+                    <details className="p-8">
+                        <summary className="text-3xl">Traits</summary>
+                    </details>
+
+                    <details className="p-8">
+                        <summary className="text-3xl">Actions</summary>
+                        <button type="button" onClick={() => setAddAction(true)}>
+                            Add Action
+                        </button>
+                        {
+                            addAction && createPortal(
+                                <AddAction onClose={() => setAddAction(false)} actionType={"Action"}/>,
+                                document.body
+                            )
+                        }
+                    </details>
+
+                    <details className="p-8">
+                        <summary className="text-3xl">Reactions</summary>
+                        <button type="button" onClick={() => setAddReaction(true)}>
+                            Add Reaction
+                        </button>
+                        {
+                            addReaction && createPortal(
+                                <AddAction onClose={() => setAddReaction(false)} actionType={"Reaction"}/>,
+                                document.body
+                            )
+                        }
+                    </details>
+
+                    <details className="p-8">
+                        <summary className="text-3xl">Legendary Actions</summary>
+                        <button type="button" onClick={() => setAddLegendary(true)}>
+                            Add Legendary Action
+                        </button>
+                        {
+                            addLegendary && createPortal(
+                                <AddAction onClose={() => setAddLegendary(false)} actionType={"Legendary Action"}/>,
+                                document.body
+                            )
+                        }
+                    </details>
+
+                    <details className="p-8">
+                        <summary className="text-3xl">Lair Actions</summary>
+                        <button type="button" onClick={() => setAddLair(true)}>
+                            Add Lair Action
+                        </button>
+                        {
+                            addLair && createPortal(
+                                <AddAction onClose={() => setAddLair(false)} actionType={"Lair Action"}/>,
+                                document.body
+                            )
+                        }
+                    </details>
+
+                    <details className="p-8">
+                        <summary className="text-3xl">Mythic Actions</summary> <br/>
+                        <button type="button" onClick={() => setAddMythic(true)}>
+                            Add Action
+                        </button>
+                        {
+                            addMythic && createPortal(
+                                <AddAction onClose={() => setAddMythic(false)} actionType={"Mythic Action"}/>,
+                                document.body
+                            )
+                        }
+                    </details>
                     <footer className="bg-purple-500 text-center w-full fixed bottom-0">
                         <button name="save" type="submit" className="border-2 p-4">Save</button>
                         <button className="border-2 p-4">Undo</button>
