@@ -353,22 +353,22 @@ export default function NPCFab() {
 
                         <div className="inline-block p-4">
                             <label>Senses</label> <br/>
-                            <p>
-                                Blindsight 
-                                <input type="number" min="1" max="240" name="b-sight" className="bg-inherit w-fit"/>ft.
+                            <p className="inline-block">
+                                Blindsight
+                                 <input type="number" min="1" max="240" name="b-sight" className="bg-inherit w-fit"/>ft.
                             </p>
 
-                            <p>
-                                Darkvision 
-                                <input type="number" min="1" max="240" name="d-sight" className="bg-inherit w-fit"/>ft.
+                            <p className="inline-block p-4">
+                                Darkvision
+                                 <input type="number" min="1" max="240" name="d-sight" className="bg-inherit w-fit"/>ft.
                             </p>
-                            <p>
-                                Tremorsense 
-                                <input type="number" min="1" max="240" name="tr-sight" className="bg-inherit w-fit"/>ft.
+                            <p className="inline-block p-4">
+                                Tremorsense
+                                 <input type="number" min="1" max="240" name="tr-sight" className="bg-inherit w-fit"/>ft.
                             </p>
-                            <p>
-                                Truesight 
-                                <input type="number" min="1" max="240" name="t-sight" className="bg-inherit w-fit"/>ft.
+                            <p className="inline-block p-4">
+                                Truesight
+                                 <input type="number" min="1" max="240" name="t-sight" className="bg-inherit w-fit"/>ft.
                             </p>
                         </div>
                     </details>
@@ -441,9 +441,12 @@ export default function NPCFab() {
                             )
                         }
                     </details>
-                    <footer className="bg-purple-500 text-center w-full fixed bottom-0">
-                        <button name="save" type="submit" className="border-2 p-4">Save</button>
-                        <button className="border-2 p-4">Undo</button>
+                    <footer className="bg-purple-500 w-full fixed bottom-0">
+                        <h1 className="text-3xl inline-block">Challenge Rating: </h1>
+                        <div className="inline text-center">
+                            <button name="save" type="submit" className="p-4">Save</button>
+                            <button className="p-4">Undo</button>
+                        </div>
                     </footer>
                 </form>
             </section>
