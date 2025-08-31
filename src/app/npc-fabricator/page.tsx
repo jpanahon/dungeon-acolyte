@@ -95,9 +95,9 @@ function AddSpeed({ onClose }) {
     return (
         <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 
                             -translate-y-1/2 w-fit p-4 border-2 z-10 bg-inherit">
-            <h1 className="text-3xl text-center">Add Speed</h1>
+            <h1 className="text-xl text-center">Add Speed</h1>
             <input type="number" name="walking" className="bg-inherit"/>ft.
-            <button type="button" onClick={onClose} className="absolute right-0 top-0 p-4 text-3xl">&times;</button>
+            <button type="button" onClick={onClose} className="absolute right-0 top-0 p-4 text-xl">&times;</button>
         </section>        
     )
 }    
@@ -108,10 +108,11 @@ function AddAction({ onClose, actionType }) {
     const [dieCount, setDieCount] = useState("1");
     const [sidedDie, setSidedDie] = useState("6");
 
+    
     return (
         <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 
-                            -translate-y-1/2 w-fit p-4 border-2 z-10 bg-inherit">
-            <h1 className="text-3xl text-center">Add {actionType}</h1>
+        -translate-y-1/2 w-fit p-4 border-2 z-10 bg-inherit">
+            <h1 className="text-xl text-center">Add {actionType}</h1>
             <label htmlFor="action-name">Name</label><br/>
             <input type="text" name="action-name" className="bg-inherit"/><br/>
             <label htmlFor="action-dmg-type">Damage Type</label> <br/>
@@ -138,13 +139,13 @@ function AddAction({ onClose, actionType }) {
                    className="w-1/12 bg-inherit"
                    value={dieCount}
                    onChange={e => setDieCount(e.target.value)}
-            />d
+                   />d
             <input type="number" 
                    name="die-side"
                    className="w-1/12 bg-inherit"
                    value={sidedDie}
                    onChange={e => setSidedDie(e.target.value)}
-            /> <br/>
+                   /> <br/>
             <label htmlFor="desc">Description</label> <br/>
             <input type="text" name="desc" className="bg-inherit"/> <br/>
             <label htmlFor="proficient">Proficient? </label>
@@ -152,7 +153,7 @@ function AddAction({ onClose, actionType }) {
             <label htmlFor="expert">Expert? </label>
             <input type="checkbox" name="expert"/> <br/>
             <button type="button">Save</button>
-            <button type="button" onClick={onClose} className="absolute right-0 top-0 p-4 text-3xl">&times;</button>
+            <button type="button" onClick={onClose} className="absolute right-0 top-0 p-4 text-xl">&times;</button>
         </section>        
     )
 }    
@@ -164,17 +165,21 @@ export default function NPCFab() {
     const [addLair, setAddLair] = useState(false);
     const [addMythic, setAddMythic] = useState(false);
     const [addSpeed, setAddSpeed] = useState(false);
-
+    
+    const [CR, setCR] = useState("1/8");
+    
     return (
         <>
             <h1 className="text-6xl">NPC Fabricator</h1>
-            <h2 className="text-3xl">
+            <h2 className="text-xl">
                  Statblock Character Card
             </h2>
-            <section className="w-1/3">
+
+            <div className="flex">
+            <section className="w-1/2">
                 <form method="POST" onSubmit={SaveMonster}>
                     <details className="p-4" open>
-                        <summary className="text-3xl p-4">Basic Information</summary>
+                        <summary className="text-xl p-4">Basic Information</summary>
                         <div className="inline-block p-4">
                             <label htmlFor="npc-name">Name</label> <br/>
                             <input type="text" name="npc-name" className="bg-inherit"></input>
@@ -226,7 +231,8 @@ export default function NPCFab() {
 
                         <div className="inline-block p-4">
                             <label htmlFor="npc-cr">Challenge Rating</label> <br/>
-                            <input type="number" min="1" max="30" name="npc-cr" className="bg-inherit"></input>
+                            <input type="number" min="1" max="30" name="npc-cr" className="bg-inherit"
+                                   value={CR} onChange={e => setCR(e.target.value)}/>
                         </div>
 
                         <div className="inline-block p-4">
@@ -262,9 +268,10 @@ export default function NPCFab() {
                     <hr/>
 
                     <details className="p-4" open>
-                        <summary className="text-3xl p-4">Modifiers</summary>
+                        <summary className="text-xl p-4">Modifiers</summary>
                         <div className="inline-block p-4">
                             <label>Speed</label> <br/>
+                            <p>Walking: <input type="number" min="0" className="w-fit bg-inherit"/>ft.</p>
                             <button type="button" onClick={() => setAddSpeed(true)}>Add Speed</button>
                             {
                                 addSpeed && createPortal(
@@ -341,7 +348,7 @@ export default function NPCFab() {
                         </div>
 
                         <div className="inline-block p-4">
-                            <label>Condition Vulnerabilities</label> <br/>
+                            <label htmlFor="cond-vul">Condition Vulnerabilities</label> <br/>
                             <select name="cond-vul" className="bg-inherit">
                                 {
                                     conditions.map((cond) => (
@@ -362,10 +369,12 @@ export default function NPCFab() {
                                 Darkvision
                                  <input type="number" min="1" max="240" name="d-sight" className="bg-inherit w-fit"/>ft.
                             </p>
+
                             <p className="inline-block p-4">
                                 Tremorsense
                                  <input type="number" min="1" max="240" name="tr-sight" className="bg-inherit w-fit"/>ft.
                             </p>
+                            
                             <p className="inline-block p-4">
                                 Truesight
                                  <input type="number" min="1" max="240" name="t-sight" className="bg-inherit w-fit"/>ft.
@@ -374,11 +383,11 @@ export default function NPCFab() {
                     </details>
                     <hr/>
                     <details className="p-8">
-                        <summary className="text-3xl">Traits</summary>
+                        <summary className="text-xl">Traits</summary>
                     </details>
 
                     <details className="p-8">
-                        <summary className="text-3xl">Actions</summary>
+                        <summary className="text-xl">Actions</summary>
                         <button type="button" onClick={() => setAddAction(true)}>
                             Add Action
                         </button>
@@ -391,7 +400,7 @@ export default function NPCFab() {
                     </details>
 
                     <details className="p-8">
-                        <summary className="text-3xl">Reactions</summary>
+                        <summary className="text-xl">Reactions</summary>
                         <button type="button" onClick={() => setAddReaction(true)}>
                             Add Reaction
                         </button>
@@ -404,7 +413,7 @@ export default function NPCFab() {
                     </details>
 
                     <details className="p-8">
-                        <summary className="text-3xl">Legendary Actions</summary>
+                        <summary className="text-xl">Legendary Actions</summary>
                         <button type="button" onClick={() => setAddLegendary(true)}>
                             Add Legendary Action
                         </button>
@@ -417,7 +426,7 @@ export default function NPCFab() {
                     </details>
 
                     <details className="p-8">
-                        <summary className="text-3xl">Lair Actions</summary>
+                        <summary className="text-xl">Lair Actions</summary>
                         <button type="button" onClick={() => setAddLair(true)}>
                             Add Lair Action
                         </button>
@@ -430,7 +439,7 @@ export default function NPCFab() {
                     </details>
 
                     <details className="p-8">
-                        <summary className="text-3xl">Mythic Actions</summary> <br/>
+                        <summary className="text-xl">Mythic Actions</summary> <br/>
                         <button type="button" onClick={() => setAddMythic(true)}>
                             Add Action
                         </button>
@@ -442,14 +451,26 @@ export default function NPCFab() {
                         }
                     </details>
                     <footer className="bg-purple-500 w-full fixed bottom-0">
-                        <h1 className="text-3xl inline-block">Challenge Rating: </h1>
-                        <div className="inline text-center">
+                        <h1 className="text-xl inline-block">Challenge Rating: {CR}</h1>
+                        <div className="inline-block text-right">
                             <button name="save" type="submit" className="p-4">Save</button>
                             <button className="p-4">Undo</button>
                         </div>
                     </footer>
                 </form>
             </section>
+            
+            <section className="w-1/2 border-2 p-4">
+                <h1 className="text-3xl">Name</h1>
+                <h1>Size species, alignment</h1>
+                <hr/>
+                <h1>Armor Class: </h1>        
+                <h1>Hit Points: </h1>
+                <h1>Speed: </h1>
+                <hr/>
+                
+            </section>
+            </div>
         </>
     );
 }
