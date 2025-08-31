@@ -170,10 +170,10 @@ export default function NPCFab() {
     
     return (
         <>
-            <h1 className="text-6xl">NPC Fabricator</h1>
-            <h2 className="text-xl">
-                 Statblock Character Card
-            </h2>
+            <div className="text-center">
+                <h1 className="text-6xl">NPC Fabricator</h1>
+                <h2 className="text-xl">Statblock Character Card</h2>
+            </div>
 
             <div className="flex">
             <section className="w-1/2">
@@ -461,12 +461,45 @@ export default function NPCFab() {
             </section>
             
             <section className="w-1/2 border-2 p-4">
-                <h1 className="text-3xl">Name</h1>
-                <h1>Size species, alignment</h1>
+                <h1 className="text-red text-3xl">My Monster</h1>
+                <h1>Medium monstrocity, lawful evil</h1>
                 <hr/>
                 <h1>Armor Class: </h1>        
                 <h1>Hit Points: </h1>
                 <h1>Speed: </h1>
+                <hr/>
+                <table>
+                    <tbody>
+                        <tr>
+                            {
+                                stats.map((stat) => (
+                                    <th key={stat.name} className="pr-4">{stat.name}</th>
+                                ))
+                            }
+                        </tr>
+                        
+                        <tr>
+                            {
+                                stats.map((stat) => (
+                                    <th key={stat.name}>
+                                        {stat.score}
+                                    </th>
+                                ))
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <h1>Saving Throws: </h1>
+                <h1>Damage Resistances: </h1>
+                <h1>Damage Immunities: </h1>
+                <h1>Damage Vulnerabilities: </h1>
+                <h1>Condition Resistances: </h1>
+                <h1>Condition Immunities: </h1>
+                <h1>Condition Vulnerabilities: </h1>
+                <h1>Senses: </h1>
+                <h1>Languages: </h1>
+                <h1>Challenge Rating: </h1>
                 <hr/>
                 
             </section>
